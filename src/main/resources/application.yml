@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: recommendations
+
+openai:
+  secret-key: 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

@@ -25,6 +25,6 @@ public class TravelController {
 		String input = request.get("content");
 
 		// 여행 여부와 GPT 답변을 반환하는 Map을 받아서 클라이언트에게 반환
-		return travelPromptService.getGptAnswerWithTravelCheck(input);
+		return travelPromptService.getGptAnswer(input);
 	}
 }

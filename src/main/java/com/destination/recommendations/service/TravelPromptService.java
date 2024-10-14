@@ -31,14 +31,10 @@ public class TravelPromptService {
 											+ "4) Cultural experiences (e.g., local foods, festivals, landmarks). "
 											+ "Do not answer questions related to general shopping or household concerns unless they involve local markets at travel destinations. "
 											+ "If the question is related to travel, provide a detailed and polite answer in Korean. "
-											+ "If the question is not related to travel, kindly respond with: 'This question is not related to travel. Please ask a question related to travel.' "
+											+ "If the question is not related to travel, kindly respond with: '이 질문은 여행과 관련이 없는 것 같습니다. 여행과 관련된 질문을 해 주세요. 궁금한 것이 있으면 언제든 물어보세요!' "
 											+ "Always respond in Korean, regardless of the user's language."
-							),
-							Map.of("role", "user", "content", input)
+							), Map.of("role", "user", "content", input)
 					)
-
-
-
 			);
 
 			JsonNode jsonResponse = objectMapper.readTree(response);

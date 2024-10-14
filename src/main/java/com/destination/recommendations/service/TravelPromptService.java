@@ -17,12 +17,10 @@ public class TravelPromptService {
 	private final WebClient webClient;
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
-	// GPT 모델에게 질문을 보내고, 여행 여부와 실제 답변을 받아오는 메서드
 	public Map<String, String> getGptAnswer(String input) {
 		Map<String, String> result = new HashMap<>();
 
 		try {
-			// API 요청을 공통 메서드로 호출 (여행 여부 및 답변 모두 처리)
 			String response = sendRequestToGpt(
 					List.of(
 							Map.of("role", "system", "content",
@@ -38,11 +36,9 @@ public class TravelPromptService {
 
 			);
 
-			// 응답에서 GPT의 전체 답변을 추출
 			JsonNode jsonResponse = objectMapper.readTree(response);
 			String gptResponse = jsonResponse.get("choices").get(0).get("message").get("content").asText();
 
-			// 결과를 바로 저장 (GPT가 '잘못된 입력입니다.' 또는 실제 답변을 제공)
 			result.put("answer", gptResponse);
 
 		} catch (Exception e) {
@@ -52,16 +48,13 @@ public class TravelPromptService {
 		return result;
 	}
 
-	// 공통 API 요청 메서드
 	private String sendRequestToGpt(List<Map<String, String>> messages) {
 		try {
-			// 요청 본문 작성
 			var requestBody = Map.of(
-					"model", "ft:gpt-3.5-turbo-1106:rat2race::AHWr2HdI",  // 모델 ID
+					"model", "ft:gpt-3.5-turbo-1106:rat2race::AHWr2HdI",
 					"messages", messages
 			);
 
-			// WebClient를 사용해 OpenAI API 호출
 			return webClient.post()
 					.bodyValue(requestBody)
 					.retrieve()

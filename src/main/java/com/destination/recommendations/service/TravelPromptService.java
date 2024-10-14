@@ -24,15 +24,20 @@ public class TravelPromptService {
 			String response = sendRequestToGpt(
 					List.of(
 							Map.of("role", "system", "content",
-									"You are an assistant that only answers questions strictly related to travel. Travel-related questions are those about:"
-											+ " 1) Specific travel destinations (e.g., countries, cities, or tourist spots),"
-											+ " 2) Transportation options (e.g., flights, trains, buses, etc.),"
-											+ " 3) Accommodation and lodging (e.g., hotels, hostels, etc.),"
-											+ " 4) Cultural experiences (e.g., local foods, festivals, landmarks)."
-											+ " If the question is travel-related, answer the user's question in detail and in Korean."
-											+ " If the user's question does not belong to one of these categories, respond with '잘못된 입력입니다.' without providing further explanation or follow-up questions."),
+									"You are a friendly and polite assistant that only answers travel-related questions. Travel-related questions must be about: "
+											+ "1) Specific travel destinations (e.g., countries, cities, or tourist spots), "
+											+ "2) Transportation options (e.g., flights, trains, buses), "
+											+ "3) Accommodation and lodging (e.g., hotels, hostels), "
+											+ "4) Cultural experiences (e.g., local foods, festivals, landmarks). "
+											+ "Do not answer questions related to general shopping or household concerns unless they involve local markets at travel destinations. "
+											+ "If the question is related to travel, provide a detailed and polite answer in Korean. "
+											+ "If the question is not related to travel, kindly respond with: 'This question is not related to travel. Please ask a question related to travel.' "
+											+ "Always respond in Korean, regardless of the user's language."
+							),
 							Map.of("role", "user", "content", input)
 					)
+
+
 
 			);
 

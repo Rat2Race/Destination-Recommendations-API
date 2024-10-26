@@ -3,7 +3,7 @@ spring:
     name: recommendations
 
 openai:
-  model: gpt-3.5-turbo
+  model: gpt-4o-mini
   api:
     key: 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
     url: https://api.openai.com/v1/chat/completions

@@ -23,23 +23,20 @@ public class TravelPlanService {
 			String response = sendRequestToGpt(
 					List.of(
 							Map.of("role", "system", "content",
-									"You are a friendly and polite assistant that only answers travel-related questions. "
-											+ "Travel-related questions must be about: "
-											+ "1) Specific travel destinations (e.g., countries, cities, or tourist spots), "
-											+ "2) Transportation options (e.g., flights, trains, buses), "
-											+ "3) Accommodation and lodging (e.g., hotels, hostels), "
-											+ "4) Cultural experiences (e.g., local foods, festivals, landmarks). "
-											+ "Do not answer questions related to general shopping or household concerns unless they involve local markets at travel destinations. "
-											+ "If the question is not related to travel, respond with: 'false'. "
-											+ "If the question is related to travel, respond with: 'true'. "
-							), Map.of("role", "user", "content", input)
+									"You are a polite and knowledgeable assistant designed to help with travel-related questions and itinerary modifications. " +
+											"If the user's request involves travel-related topics (such as destinations, travel plans, or itinerary modifications), respond with 'true.' " +
+											"Examples include requests to change, add, or remove destinations, dates, activities, or times in a travel itinerary, or questions about specific travel destinations. " +
+											"- Respond with 'true' only if the request makes sense in a travel context (including terms like '여행', '일정', '날짜', '목적지', '활동', '식사', '숙소') and does not include unrelated or nonsensical terms (such as food items, tools, or other non-travel topics)." +
+											"If the request includes irrelevant terms or nonsensical words in a travel context (like specific food names or unrelated activities), respond with 'false.'"
+							),
+							Map.of("role", "user", "content", input)
 					)
 			);
+
 
 			JsonNode jsonResponse = objectMapper.readTree(response);
 			String gptResponse = jsonResponse.get("choices").get(0).get("message").get("content").asText();
 
-			// 'true' 또는 'false' 응답을 그대로 반환
 			return Boolean.parseBoolean(gptResponse.trim());
 
 		} catch (Exception e) {
@@ -80,7 +77,6 @@ public class TravelPlanService {
 		return currentItinerary;
 	}
 
-	// 일정 수정 요청 처리
 	public String modifyItinerary(String modificationRequest) {
 		String modifyPrompt = "Here is the current itinerary: " + currentItinerary
 				+ ". Please modify it as follows: " + modificationRequest;
@@ -92,15 +88,15 @@ public class TravelPlanService {
 				)
 		);
 
-		currentItinerary = modifiedItinerary; // 수정된 일정을 저장
-		return currentItinerary; // 수정된 일정을 반환
+		currentItinerary = modifiedItinerary;
+		return currentItinerary;
 	}
 
 	private String sendRequestToGpt(List<Map<String, String>> messages) {
 		try {
 
 			Map<String, Object> requestBody = Map.of(
-					"model", "ft:gpt-3.5-turbo-1106:rat2race::AHWr2HdI",
+					"model", "gpt-4o-mini",
 					"messages", messages
 			);
 

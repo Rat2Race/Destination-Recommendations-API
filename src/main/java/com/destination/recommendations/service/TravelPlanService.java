@@ -40,12 +40,10 @@ public class TravelPlanService {
 			return Boolean.parseBoolean(gptResponse.trim());
 
 		} catch (Exception e) {
-			return false; // 오류 발생 시 false 반환
+			return false;
 		}
 	}
 
-
-	// 여행 일정 생성
 	public String generateTravelPlan(ClientInfoRequest request) {
 		String recommendationPrompt = "Recommend a suitable travel destination for a "
 				+ request.age() + "-year-old " + request.gender()

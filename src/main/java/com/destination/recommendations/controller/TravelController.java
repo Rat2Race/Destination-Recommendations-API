@@ -14,21 +14,22 @@ public class TravelController {
 
 	private final TravelPlanService travelPlanService;
 
-	@PostMapping("/generate")
-	public ResponseEntity<?> generateCalendar(@RequestBody ClientInfoRequest request) {
-		try {
-			String itinerary = travelPlanService.generateTravelPlan(request);
-			return ResponseEntity.ok(itinerary);
-
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("일정 생성 중 오류가 발생했습니다: " + e.getMessage());
-		}
+	@PostMapping("/check")
+	public ResponseEntity<Boolean> isTravelRelated(@RequestBody String input) {
+		boolean isRelated = travelPlanService.isTravelRelated(input);
+		return ResponseEntity.ok(isRelated);
 	}
 
-	@PostMapping("/judgment")
-	public ResponseEntity<?> judgmentRequest(@RequestBody String request) {
-		return ResponseEntity.status(HttpStatus.OK).body(travelPlanService.isTravelRelated(request));
+	@PostMapping("/generate")
+	public ResponseEntity<String> generateTravelPlan(@RequestBody ClientInfoRequest request) {
+		String itinerary = travelPlanService.generateTravelPlan(request);
+		return ResponseEntity.ok(itinerary);
+	}
+
+	@PostMapping("/modify")
+	public ResponseEntity<String> modifyItinerary(@RequestBody String modificationRequest) {
+		String modifiedItinerary = travelPlanService.modifyItinerary(modificationRequest);
+		return ResponseEntity.ok(modifiedItinerary);
 	}
 
 }

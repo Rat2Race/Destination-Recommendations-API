@@ -1,6 +1,7 @@
 package com.destination.recommendations.service;
 
 import com.destination.recommendations.dto.ClientInfoRequest;
+import com.destination.recommendations.dto.ClientRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -33,7 +34,6 @@ public class TravelPlanService {
 					)
 			);
 
-
 			JsonNode jsonResponse = objectMapper.readTree(response);
 			String gptResponse = jsonResponse.get("choices").get(0).get("message").get("content").asText();
 
@@ -61,7 +61,9 @@ public class TravelPlanService {
 				+ recommendedDestination + " from " + request.startDate()
 				+ " to " + request.endDate() + ". The total budget is " + request.budget() + " KRW. "
 				+ "Include details about flights, accommodation, meals, transportation, and sightseeing for each day."
-				+ "Plan your trip with the information you enter.Don't ask questions, just make a plan. If the user doesn't enter a currency unit, calculate it in Korean won, e.g., if they write 78, it's 780,000 won. Make a plan from day 1. Specify how much the flight will cost, how you've allocated your budget, where you're going to stay, what restaurants you're going to eat, what hotels you're going to stay at, and how much you're going to spend on transportation."
+				+ "Plan your trip with the information you enter.Don't ask questions, just make a plan. "
+				+ "If the user doesn't enter a currency unit, calculate it in Korean won, e.g., "
+				+ "if they write 78, it's 780,000 won. Make a plan from day 1. Specify how much the flight will cost, how you've allocated your budget, where you're going to stay, what restaurants you're going to eat, what hotels you're going to stay at, and how much you're going to spend on transportation."
 				+ "The response must be in Korean.";
 
 		String response = sendRequestToGpt(
@@ -75,9 +77,10 @@ public class TravelPlanService {
 		return currentItinerary;
 	}
 
-	public String modifyItinerary(String modificationRequest) {
+	public String modifyItinerary(ClientRequest modificationRequest) {
 		String modifyPrompt = "Here is the current itinerary: " + currentItinerary
-				+ ". Please modify it as follows: " + modificationRequest;
+				+ ". Please modify it as follows: " + modificationRequest.clientRequest()
+				+ "The response must be in Korean.";
 
 		String modifiedItinerary = sendRequestToGpt(
 				List.of(

@@ -1,0 +1,6 @@
+openai:
+  model: gpt-4o-mini
+  api:
+    key: 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
+    url: https://api.openai.com/v1/chat/completions
+

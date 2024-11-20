@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      OPEN_AI_KEY: ${{secrets.OPEN_AI_KEY}}
+      OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
+      OPEN_AI_URI: ${{ secrets.OPEN_AI_URI }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +31,7 @@ jobs:
       - name: Docker build
         run: |
           docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
-          docker build --build-arg OPEN_AI_KEY="${{ env.OPEN_AI_KEY }}"
+          docker build --build-arg OPEN_AI_KEY="${{ env.OPEN_AI_KEY }}" \
+          --build-arg OPEN_AI_URI="${{ env.OPEN_AI_URI }}
           -t destination-api .
           docker push rat2race/destination-api:${GITHUB_SHA::7}

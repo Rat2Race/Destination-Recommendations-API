@@ -4,8 +4,11 @@ FROM bellsoft/liberica-openjdk-alpine:17
 # FROM openjdk:11-jdk-alpine
 
 ARG OPEN_AI_KEY
+ARG OPEN_AI_URI
 
-ENV OPEN_AI_KEY=${OPEN_AI_KEY}
+
+ENV OPEN_AI_KEY=${OPEN_AI_KEY} \
+    OPEN_AI_URI=${OPEN_AI_URI}
 
 CMD ["./gradlew", "clean", "build"]
 # or Maven

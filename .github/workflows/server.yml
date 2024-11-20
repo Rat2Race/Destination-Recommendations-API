@@ -34,4 +34,5 @@ jobs:
           docker build --build-arg OPEN_AI_KEY="${{ env.OPEN_AI_KEY }}" \
           --build-arg OPEN_AI_URI="${{ env.OPEN_AI_URI }}" \
           -t destination-api .
+          docker tag destination-api rat2hub/destination-api:${GITHUB_SHA::7}
           docker push rat2hub/destination-api:${GITHUB_SHA::7}

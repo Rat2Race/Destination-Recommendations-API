@@ -2,10 +2,6 @@ server:
   port: 8081
 
 spring:
-  profiles:
-    include: prod
-  application:
-    name: recommendations
   data:
     redis:
       host: localhost

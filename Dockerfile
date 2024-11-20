@@ -8,7 +8,7 @@ ARG OPEN_AI_URI
 
 
 ENV OPEN_AI_KEY=${OPEN_AI_KEY} \
-    dOPEN_AI_URI=${OPEN_AI_URI}
+    OPEN_AI_URI=${OPEN_AI_URI}
 
 CMD ["./gradlew", "clean", "build"]
 # or Maven
